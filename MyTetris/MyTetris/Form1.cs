@@ -19,6 +19,10 @@ namespace MyTetris
         private int sizeOfPixel = 35;
 
 
+        // сама фигура
+        StandartShape kvadrat = new StandartShape(3,0);
+
+
         // очки игры
         private int score = 0;
 
@@ -41,19 +45,103 @@ namespace MyTetris
         }
 
 
-
-        public Form1()
+        // рисуем фигурку
+        public void Drawfigure(Graphics g)
         {
-            InitializeComponent();
+            //  Rectangle kvadrat = new Rectangle(x * sizeOfPixel, y * sizeOfPixel, sizeOfPixel, sizeOfPixel);
+            for (int i = 0; i < gameMape.GetLength(0); i++)
+            {
+                for (int j = 0; j < gameMape.GetLength(1); j++)
+                {
+                    if (gameMape[i, j] == 1)
+                    {
+                        g.FillRectangle(Brushes.Red, j * sizeOfPixel + 1, i * sizeOfPixel + 1, sizeOfPixel - 1, sizeOfPixel - 1);
+                    }
+                }
+            }
+        }
+
+
+        // метод синхронизацыи масива фигуры и поля
+        public void Sunchro()
+        {
+
+            for (int i = kvadrat.y; i < kvadrat.y + kvadrat.body.GetLength(1); i++)
+            {
+                for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+
+                    if (kvadrat.body[i - kvadrat.y, j - kvadrat.x] != 0)
+                        gameMape[i, j] = kvadrat.body[i - kvadrat.y, j - kvadrat.x];
+                }
+            }
+        }
+
+        // очистка тереторий
+        public void ResetArea()
+        {
+            for (int i = kvadrat.y; i < kvadrat.y + kvadrat.body.GetLength(1); i++)
+            {
+                for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+
+                    if (i >= 0 && j >= 0 && i < 16 && j < 8)
+                        if (kvadrat.body[i - kvadrat.y, j - kvadrat.x] != 0)
+                            gameMape[i, j] = 0;
+                }
+            }
+        }
+
+
+        // проверка на то что не выходит ли фигура за пределы масива или не лежит под ней какая то другая фигура
+        public bool ChecknextStep()
+        {
+            for (int i = kvadrat.y + kvadrat.body.GetLength(1); i >= kvadrat.y; i--)
+            {
+                for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+                    if(kvadrat.body[i+1,j] != 0 || i + 1 == 16)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+
         }
 
 
 
+        public Form1()
+        {
+            InitializeComponent();
+           
+            timer1.Interval = 1000;
+            timer1.Tick += new EventHandler(update);
+            timer1.Start();
+        }
 
+
+        // метод 
+        private void update(object sender, EventArgs e)
+        {
+            Sunchro();
+            Invalidate();
+
+        }
 
         private void PaintAllObject(object sender, PaintEventArgs e)
         {
+            // отрисовка сетки
             DrawGrid(e.Graphics);
+            // отрисовка фигуры
+            Drawfigure(e.Graphics);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }
