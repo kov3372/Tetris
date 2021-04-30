@@ -14,7 +14,7 @@ namespace MyTetris
 
         public void Movedown()
         {
-
+             if(y < 16 - body.GetLength(0))
             y++;
         }
 

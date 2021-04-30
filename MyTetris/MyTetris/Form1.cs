@@ -18,10 +18,8 @@ namespace MyTetris
         // размер квадратика
         private int sizeOfPixel = 35;
 
-
         // сама фигура
         StandartShape kvadrat = new StandartShape(3,0);
-
 
         // очки игры
         private int score = 0;
@@ -70,9 +68,11 @@ namespace MyTetris
             {
                 for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
                 {
-
                     if (kvadrat.body[i - kvadrat.y, j - kvadrat.x] != 0)
+                    {
                         gameMape[i, j] = kvadrat.body[i - kvadrat.y, j - kvadrat.x];
+                    }
+                      
                 }
             }
         }
@@ -84,7 +84,6 @@ namespace MyTetris
             {
                 for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
                 {
-
                     if (i >= 0 && j >= 0 && i < 16 && j < 8)
                         if (kvadrat.body[i - kvadrat.y, j - kvadrat.x] != 0)
                             gameMape[i, j] = 0;
@@ -93,44 +92,177 @@ namespace MyTetris
         }
 
 
-        // проверка на то что не выходит ли фигура за пределы масива или не лежит под ней какая то другая фигура
-        public bool ChecknextStep()
+        // проверка на то что не выходит ли фиугра за правую гарницу карты или не лежит какая то фигура с права
+        // Нужно реализовать после правлеьной реализаций функций ChecknextStep()
+        public bool CheckRightside()
         {
-            for (int i = kvadrat.y + kvadrat.body.GetLength(1); i >= kvadrat.y; i--)
+            for (int i = kvadrat.y; i < kvadrat.y + kvadrat.body.GetLength(1); i++)
             {
                 for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
                 {
-                    if(kvadrat.body[i+1,j] != 0 || i + 1 == 16)
+                    int g1 = i - kvadrat.y;
+                    int g2 = j - kvadrat.x;
+
+                    if (kvadrat.body[g1,g2] != 0)
                     {
-                        return true;
+                        if (j + 1 > 7 || j + 1 < 0)
+                            return true;
+
+                        if(gameMape[i,j + 1 ] != 0)
+                        {
+                            if (kvadrat.body[g1, g2 + 1] == 0)
+                                return true;
+                        }
                     }
                 }
             }
+                    return false;
+        }
+
+        // проверка на то что не выходит ли фиугра за левую гарницу карты или не лежит какая то фигура с права
+        // Нужно реализовать после правлеьной реализаций функций ChecknextStep()
+        public bool CheckLefttside()
+        {
             return false;
+        }
 
 
+
+
+        // проверка на то что не выходит ли фигура за пределы масива или не лежит под ней какая то другая фигура
+        public bool ChecknextStep()
+        {
+            for (int i = kvadrat.y  + kvadrat.body.GetLength(0) - 1; i >= kvadrat.y; i--)
+            {
+                for (int j = kvadrat.x ; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+                    int g1 = i - kvadrat.y;
+                    int g2 = j - kvadrat.x;
+
+
+                    if (kvadrat.body[g1, g2] !=0)
+                    {
+                        if ( i + 1 == 16)
+                        {
+                            return true;
+                        }
+
+                        if (gameMape[i+ 1, j] != 0 )
+                        {
+                            return true;
+                        }
+                    }                                   
+                }
+            }
+            return false;
         }
 
 
 
         public Form1()
         {
-            InitializeComponent();
-           
+            InitializeComponent();                   
+            // реализация таймера
             timer1.Interval = 1000;
             timer1.Tick += new EventHandler(update);
             timer1.Start();
+
+            // реализация движение
+            this.KeyUp += new KeyEventHandler(key);
         }
+
+        // контроль клавиш
+        private void key(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                // верчение фигуры 
+                case Keys.Space:
+
+                    ResetArea();
+                    kvadrat.Rotate();
+                    Sunchro();
+                    Invalidate();
+                    break;
+
+                 // движение фиугры влево
+                case Keys.Left:
+
+                    ResetArea();
+                    kvadrat.Leght();
+                    Sunchro();
+                    Invalidate();
+                    break;
+
+                 // движение фигуры вправо
+                case Keys.Right:
+
+                    if(!CheckRightside())
+                    {
+                        ResetArea();
+                        kvadrat.Right();
+                        Sunchro();
+                        Invalidate();
+                    }
+                   
+                    break;
+            }
+        }
+
+
+
+        // очистка заполненых фигур
+        public void DeleteFilledRows()
+        {
+            // количество заполненых клеток в ряду
+            int count;
+            // колическто удаленных линий
+            int countOfDeletLine = 0;
+
+
+            for (int i = 0; i < gameMape.GetLength(0); i++)
+            {
+                count = 0;
+                for (int j = 0; j < gameMape.GetLength(1); j++)
+                {
+                    if(gameMape[i,j] !=0)
+                    {
+                        count++;
+                    }
+                }
+                if (count == 8)
+                {
+                    
+                }
+            }
+        }
+
+
 
 
         // метод 
         private void update(object sender, EventArgs e)
         {
-            Sunchro();
+            ResetArea();
+            if(!ChecknextStep())
+            {
+                   kvadrat.Movedown();     
+            }
+            else
+            {
+
+                Sunchro();
+                kvadrat = new StandartShape(3,0);
+            }
+
+
+            Sunchro();                 
             Invalidate();
 
         }
 
+
+        // функция ресования фигур
         private void PaintAllObject(object sender, PaintEventArgs e)
         {
             // отрисовка сетки
@@ -143,5 +275,36 @@ namespace MyTetris
         {
 
         }
+
+
+
+        /*
+          for (int i = kvadrat.y  + (kvadrat.body.GetLength(1) - 1); i >= kvadrat.y; i--)
+            {
+                for (int j = kvadrat.x ; j <  kvadrat.body.GetLength(0); j++)
+                {
+                    if(kvadrat.body[i - kvadrat.y, j - kvadrat.x] !=0)
+                    {
+                        if ( i + 1 == 16)
+                        {
+                            return true;
+                        }
+
+                        if (kvadrat.body[i + 1, j] != 0 )
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    
+                }
+            }
+            return false;
+         
+         */
     }
+
 }

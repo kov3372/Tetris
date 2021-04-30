@@ -44,13 +44,22 @@ namespace MyTetris
             { 1, 0, 0, 0 }
         };
 
+
+        // констурктор
         public StandartShape(int x, int y)
         {
             this.x = x;
             this.y = y;
             this.body = GenetateBody();
-
         }
+
+
+        public void ResetHape(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
 
         // метод генерации тела
         public int[,] GenetateBody()
@@ -87,15 +96,8 @@ namespace MyTetris
             for (int i = 0; i < body.GetLength(0); i++)
             {
                 for (int j = 0; j < body.GetLength(1); j++)
-                {
-
-                    tempM[i, j] = body[j, i];
-                    /*   
-                       int temp = body[i, j];
-                       body[i, j] = body[j, i];
-                       body[j, i] = temp;
-
-                    */
+                {                 
+                    tempM[i, j] = body[j, i];                  
                 }
             }
             body = tempM;
