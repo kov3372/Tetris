@@ -27,7 +27,6 @@ namespace MyTetris
         // количество удаленных линий
         private int countOfline = 0;
 
-
         // отрисовка сетки карты на форме
         public void DrawGrid(Graphics graf)
         {
@@ -35,7 +34,6 @@ namespace MyTetris
             {
                 graf.DrawLine(new Pen(Color.Black), new Point(0, i * sizeOfPixel), new Point(280, i * sizeOfPixel));
             }
-
             for (int j = 0; j <= gameMape.GetLength(1); j++)
             {
                 graf.DrawLine(new Pen(Color.Black), new Point(j * sizeOfPixel, 0), new Point(j * sizeOfPixel, 560));
@@ -60,7 +58,7 @@ namespace MyTetris
         }
 
 
-        // метод синхронизацыи масива фигуры и поля
+        // метод синхронизацыи масива фигуры и масива поля
         public void Sunchro()
         {
 
@@ -110,24 +108,48 @@ namespace MyTetris
 
                         if(gameMape[i,j + 1 ] != 0)
                         {
+                            if (g2 + 1 >= kvadrat.body.GetLength(0) || g1 + 1 < 0)
+                                return true;
+
                             if (kvadrat.body[g1, g2 + 1] == 0)
                                 return true;
                         }
+                        
                     }
                 }
             }
-                    return false;
+           return false;
         }
 
         // проверка на то что не выходит ли фиугра за левую гарницу карты или не лежит какая то фигура с права
         // Нужно реализовать после правлеьной реализаций функций ChecknextStep()
         public bool CheckLefttside()
         {
+            for (int i = kvadrat.y; i < kvadrat.y + kvadrat.body.GetLength(1); i++)
+            {
+                for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+                    int g1 = i - kvadrat.y;
+                    int g2 = j - kvadrat.x;
+
+                    if (kvadrat.body[g1, g2] != 0)
+                    {
+                        if (j  -1 > 7 || j  -1 < 0)
+                            return true;
+
+                       if (gameMape[i, j+1* -1] != 0)
+                        {
+                            if (g2 +1*-1 >= kvadrat.body.GetLength(0) || g1 + 1 *-1< 0)
+                                return true;
+
+                            if (kvadrat.body[g1, g2 + 1*-1] == 0)
+                                return true;
+                        }                       
+                    }
+                }
+            }
             return false;
         }
-
-
-
 
         // проверка на то что не выходит ли фигура за пределы масива или не лежит под ней какая то другая фигура
         public bool ChecknextStep()
@@ -154,6 +176,27 @@ namespace MyTetris
                     }                                   
                 }
             }
+            return false;
+        }
+
+        //  метод проверяет возможна ли ротация фиугры
+        public bool IsRotationPossible()
+        {
+            for (int i = kvadrat.y; i < kvadrat.y + kvadrat.body.GetLength(1); i++)
+            {
+                for (int j = kvadrat.x; j < kvadrat.x + kvadrat.body.GetLength(0); j++)
+                {
+
+                    if (j >= 0 && j <= 7)
+                    {
+                        if(gameMape[i,j] == 0 && kvadrat.body[i - kvadrat.y , j - kvadrat.x]  == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
             return false;
         }
 
@@ -187,16 +230,21 @@ namespace MyTetris
 
                  // движение фиугры влево
                 case Keys.Left:
+                  
+                    if(!CheckLefttside())
+                    {
+                        ResetArea();
+                        kvadrat.Leght();
+                        Sunchro();
+                        Invalidate();
+                    }
+                       
 
-                    ResetArea();
-                    kvadrat.Leght();
-                    Sunchro();
-                    Invalidate();
+                    
                     break;
 
                  // движение фигуры вправо
                 case Keys.Right:
-
                     if(!CheckRightside())
                     {
                         ResetArea();
@@ -204,6 +252,9 @@ namespace MyTetris
                         Sunchro();
                         Invalidate();
                     }
+                 
+                     
+                    
                    
                     break;
             }

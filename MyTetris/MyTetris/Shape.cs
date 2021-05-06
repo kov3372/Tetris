@@ -14,20 +14,20 @@ namespace MyTetris
 
         public void Movedown()
         {
-             if(y < 16 - body.GetLength(0))
+            
             y++;
         }
 
 
         public void Leght()
         {
-            if (x > 0)
+           
                 x--;
         }
 
         public void Right()
         {
-            if (x < 8 - body.GetLength(0))
+          
                 x++;
         }
 
