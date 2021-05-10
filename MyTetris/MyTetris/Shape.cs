@@ -13,22 +13,18 @@ namespace MyTetris
         public int[,] body;
 
         public void Movedown()
-        {
-            
+        {           
             y++;
         }
 
-
         public void Leght()
-        {
-           
-                x--;
+        {           
+           x--;
         }
 
         public void Right()
-        {
-          
-                x++;
+        {          
+             x++;
         }
 
 

@@ -14,18 +14,14 @@ namespace MyTetris
     {
         // игровое поле
         private int[,] gameMape = new int[16, 8];
-
         // размер квадратика
         private int sizeOfPixel = 35;
-
         // сама фигура
         StandartShape kvadrat = new StandartShape(3,0);
-
         // очки игры
         private int score = 0;
 
-        // количество удаленных линий
-        private int countOfline = 0;
+      
 
         // отрисовка сетки карты на форме
         public void DrawGrid(Graphics graf)
@@ -69,8 +65,7 @@ namespace MyTetris
                     if (kvadrat.body[i - kvadrat.y, j - kvadrat.x] != 0)
                     {
                         gameMape[i, j] = kvadrat.body[i - kvadrat.y, j - kvadrat.x];
-                    }
-                      
+                    }                    
                 }
             }
         }
@@ -200,8 +195,6 @@ namespace MyTetris
             return false;
         }
 
-
-
         public Form1()
         {
             InitializeComponent();                   
@@ -231,15 +224,11 @@ namespace MyTetris
                  // движение фиугры влево
                 case Keys.Left:
                   
-                    if(!CheckLefttside())
-                    {
+                
                         ResetArea();
                         kvadrat.Leght();
                         Sunchro();
                         Invalidate();
-                    }
-                       
-
                     
                     break;
 
@@ -252,15 +241,10 @@ namespace MyTetris
                         Sunchro();
                         Invalidate();
                     }
-                 
-                     
-                    
-                   
+                                                                          
                     break;
             }
         }
-
-
 
         // очистка заполненых фигур
         public void DeleteFilledRows()
@@ -283,9 +267,17 @@ namespace MyTetris
                 }
                 if (count == 8)
                 {
-                    
+                    countOfDeletLine++;
+                    for (int p = i; p >= 1; p--)
+                    {
+                        for (int p1 = i; p1 < gameMape.GetLength(1); p1++)
+                        {
+                            gameMape[p , p1] = gameMape[p-1, p1];
+                        }
+                    }
                 }
             }
+            score += (10 * countOfDeletLine);
         }
 
 
@@ -301,8 +293,9 @@ namespace MyTetris
             }
             else
             {
-
+                
                 Sunchro();
+                DeleteFilledRows();
                 kvadrat = new StandartShape(3,0);
             }
 
