@@ -9,34 +9,34 @@ namespace MyTetris
     class StandartShape : Shape
     {
         // варинаты  фигур
-        public int[,] figure1 = new int[2, 2]
+        private static int[,] figure1 = new int[2, 2]
         {
              { 1, 1 },
              { 1, 1 }
         };
 
-        public int[,] figure2 = new int[3, 3]
+        private static int[,] figure2 = new int[3, 3]
         {
              { 1, 0, 0 },
              { 1, 1, 1 },
              { 0, 0, 0 }
         };
 
-        public int[,] figure3 = new int[3, 3]
+        private static int[,] figure3 = new int[3, 3]
         {
              { 0, 1, 0 },
              { 1, 1, 1 },
              { 0, 0, 0 }
         };
 
-        public int[,] figure4 = new int[3, 3]
+        private static int[,] figure4 = new int[3, 3]
          {
              { 0, 1, 1 },
              { 1, 1, 0 },
              { 0, 0, 0 }
          };
 
-        public int[,] figure5 = new int[4, 4]
+        private static int[,] figure5 = new int[4, 4]
         {
             { 1, 0, 0, 0 },
             { 1, 0, 0, 0 },
@@ -84,7 +84,7 @@ namespace MyTetris
                     int g1 = i - y;
                     int g2 = j - x;
 
-                    if (body[g1, g2] != 0)
+                    if (body[g1, g2] != 0 )
                     {
                         if (i + 1 == 16)
                         {

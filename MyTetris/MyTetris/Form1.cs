@@ -18,14 +18,15 @@ namespace MyTetris
         // размер квадратика
         private int sizeOfPixel = 35;
        
+       
         // сама фигура
-        Shape kvadrat = new Liquidshape(3,0);
+        Shape kvadrat = new Liquidshape(3, 0);
 
         // обычный интервал падения
         int normalInterval = 1000;
 
         // ускореный интервал падения
-        int fastInterval = 500;
+        int fastInterval = 300;
 
         // очки игры
         private int score = 0;
@@ -189,6 +190,8 @@ namespace MyTetris
         private void update(object sender, EventArgs e)
         {
 
+
+
             kvadrat.ResetArea(gameMape);
             if(!kvadrat.ChecknextStep(gameMape))
             {
@@ -198,7 +201,19 @@ namespace MyTetris
             {
                 kvadrat.SyncShapeWithMap(gameMape);
                 DeleteFilledRows();
-                kvadrat = new StandartShape(3, 0);             
+
+                switch (new Random().Next(1,3))
+               {
+                   case 1:
+                    kvadrat = new StandartShape(3, 0);
+                  break;
+
+                   case 2:
+                  kvadrat = new Liquidshape(3, 0);
+                  break;
+               }
+
+                      
             }
 
             kvadrat.SyncShapeWithMap(gameMape);
