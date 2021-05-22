@@ -75,9 +75,12 @@ namespace MyTetris
             {
                 for (int j = x; j < x + body.GetLength(0); j++)
                 {
-                    if(body[i - y, j - x] != 0 )
+
+                   if(body[i - y, j - x] != 0 )                   
                     {
-                       Fallingdown(gameMape, j);
+                       
+                        Fallingdown(gameMape, j);
+                       
                     }
 
                 }
@@ -121,34 +124,33 @@ namespace MyTetris
 
         public void Fallingdown(int[,] gameMape, int p1)
         {
+          
             for (int i = y; i < gameMape.GetLength(0); i++)
             {
                 int g1 = i - y;
                 int g2 = p1 - x;
 
+                                          
+                    if (g1  >= body.GetLength(1) - 1)
+                    {
+                        
 
+                        if (i == 15 || gameMape[i + 1, p1] != 0)
+                        {                         
+                            gameMape[i, p1] = 2;
+                            break;
+                        }
+                        else
+                        {
+                           gameMape[i, p1] = 0;
+                           gameMape[i + 1, p1] = 2;
+                           continue;
+                        }
 
-               
-                                if (g1 >= body.GetLength(1) - 1)
-                                {
-                                  ///  body[g1, g2] = 0;
-
-                                    if (i == 15 || gameMape[i + 1, p1] != 0)
-                                    {
-                                          gameMape[i, p1] = 2;
-                                          break;
-                                    }
-                                    else
-                                    {
-                                         
-                                          gameMape[i, p1] = 0;
-                                          gameMape[i + 1, p1] = 2;
-                                    }
-
-                                  
-                                }
-               
-
+                       
+                    }
+                      
+                    
 
                 if (body[i - y, p1 - x] != 0 )
                 {
@@ -160,18 +162,16 @@ namespace MyTetris
                     }
                     else
                     {
-                      
                        
-                            body[g1, g2] = 0;
-                            body[g1 + 1, g2] = 2;
-                            gameMape[i, p1] = 0;
-                        
-
-                       
-                        //   int debag = body[i - y + 1, p1 - x];
-
-                        continue;
+                        gameMape[i, p1] = 0;
+                        body[g1, g2] = 0;
+                        body[g1 + 1, g2] = 2;
+                                                                                
                     }
+                }
+                else
+                {
+                    continue;
                 }
 
 
@@ -179,7 +179,7 @@ namespace MyTetris
         }
 
 
-        // нужно реализовать
+       
         public override void SyncShapeWithMap(int[,] gameMape)
         {
             for (int i = y; i < y + body.GetLength(1); i++)
