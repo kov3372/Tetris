@@ -154,7 +154,6 @@ namespace MyTetris
                timer1.Interval = fastInterval;                 
                break;
 
-
                // возвращяем обычный темп падения
                 case Keys.Up:
                 timer1.Interval  = normalInterval;
@@ -189,13 +188,7 @@ namespace MyTetris
             }
         }
 
-        
-      
-
-
-
-
-     
+              
         private void update(object sender, EventArgs e)
         {
             kvadrat.ResetArea(gameMape);
@@ -211,7 +204,7 @@ namespace MyTetris
               switch (new Random().Next(1,3))
               {
                    case 1:
-                    kvadrat = new StandartShape(3, 0);
+                  kvadrat = new StandartShape(3, 0);
                   break;
 
                    case 2:
@@ -226,8 +219,7 @@ namespace MyTetris
                     timer1.Stop();
                     MessageBox.Show("ваш результат" + " " + score);
                 }
-
-                      
+                     
             }
 
             kvadrat.SyncShapeWithMap(gameMape);
@@ -243,13 +235,6 @@ namespace MyTetris
             // отрисовка фигуры
             Drawfigure(e.Graphics);
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-        }
-
-
 
       
     }
