@@ -25,50 +25,8 @@ namespace MyTetris
         };
       
         
-        public bool WasContact(int[,] gameMape  )
-        {
-            bool flag = false;
-
-            for(int i = y; i < y + body.GetLength(1); i++)
-            {
-                for (int j = x; i < x + body.GetLength(1); j++)
-                {
-                    if (body[i - y, j - x] != 0)
-                    {
-                        if(gameMape[i+1,j] != 0 || i==15)
-                        {
-                            flag = true;
-                        }
-                    }
-                }
-            }
-
-            return flag;
-        }
-
-
-        /*
-        *
-          public void Fallingdown(int[,] gameMape  )
-        {
-            for(int i = y; i < gameMape.GetLength(0); i++)
-            {
-                for (int j = x; j < x + body.GetLength(1);j++)
-                {
-                    if(body[i - y, i -x ] != 0)
-                    {
-                        if( gameMape[i +1 , j] !=0 || i == 15)
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-        */
-
-
-            // метод который пробегал по фигуре
+           
+       // метод который пробегал по фигуре
         public void GoOnMainfiagonal(int[,] gameMape)
         {
             for (int i = y; i < y + body.GetLength(1); i++)
@@ -122,9 +80,10 @@ namespace MyTetris
 
        */
 
+
+        // метод отвечает за стиканье отдельного пикселя
         public void Fallingdown(int[,] gameMape, int p1)
-        {
-          
+        {          
             for (int i = y; i < gameMape.GetLength(0); i++)
             {
                 int g1 = i - y;
@@ -132,8 +91,12 @@ namespace MyTetris
 
                                           
                     if (g1  >= body.GetLength(1) - 1)
-                    {
-                        
+                    {       
+                        if(g1-1 == body.GetLength(1) - 1)
+                        {
+                             body[g1-1, g2] = 0;
+                        }
+
 
                         if (i == 15 || gameMape[i + 1, p1] != 0)
                         {                         
@@ -145,13 +108,10 @@ namespace MyTetris
                            gameMape[i, p1] = 0;
                            gameMape[i + 1, p1] = 2;
                            continue;
-                        }
-
-                       
+                        }                      
                     }
                       
                     
-
                 if (body[i - y, p1 - x] != 0 )
                 {
                     
@@ -200,7 +160,6 @@ namespace MyTetris
                            {
                                 gameMape[i, j] = body[g1, g2];
                            }
-
                                                                                                                                            
                         }
                         else
@@ -211,6 +170,8 @@ namespace MyTetris
             }
 
         }
+
+
 
         // нужно реализовать
         public override void ResetArea(int[,] gameMape)

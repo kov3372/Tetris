@@ -101,6 +101,20 @@ namespace MyTetris
         }
 
 
+        // очистка карты при проиграще
+        public void ClearMap()
+        {
+            for (int i = 0; i < gameMape.GetLength(0); i++)
+            {
+                for (int j = 0; j < gameMape.GetLength(1); j++)
+                {
+                    gameMape[i, j] = 0;
+                   
+                }
+            }
+        }
+
+
         public Form1()
         {
             InitializeComponent();                   
@@ -124,7 +138,7 @@ namespace MyTetris
                 
                 case Keys.Space:
                 if(!kvadrat.RoteshenIsPossible(gameMape))
-                  {
+                {
                         // очистили
                         kvadrat.ResetArea(gameMape);
                         // подвинули
@@ -132,21 +146,19 @@ namespace MyTetris
                         // синхронизировали
                         kvadrat.SyncShapeWithMap(gameMape);
                         Invalidate();
-                  }
-                 break;
-
-
+                }
+                break;
                  
               //ускоряем падение
-                case Keys.Down:
+               case Keys.Down:
                timer1.Interval = fastInterval;                 
-                    break;
+               break;
 
 
                // возвращяем обычный темп падения
                 case Keys.Up:
                 timer1.Interval  = normalInterval;
-                    break;
+                break;
 
                 case Keys.Left:   
                 if(!kvadrat.CheckLefttside(gameMape))
@@ -163,7 +175,6 @@ namespace MyTetris
 
                 
                 case Keys.Right:
-
                 if (!kvadrat.CheckRightside(gameMape))
                 {
                   // очистили
@@ -173,9 +184,7 @@ namespace MyTetris
                  // синхронизировали
                   kvadrat.SyncShapeWithMap(gameMape);
                  Invalidate();
-                }
-
-                     
+                }                   
                 break;
             }
         }
@@ -189,9 +198,6 @@ namespace MyTetris
      
         private void update(object sender, EventArgs e)
         {
-
-
-
             kvadrat.ResetArea(gameMape);
             if(!kvadrat.ChecknextStep(gameMape))
             {
@@ -202,8 +208,8 @@ namespace MyTetris
                 kvadrat.SyncShapeWithMap(gameMape);
                 DeleteFilledRows();
 
-                switch (new Random().Next(1,3))
-               {
+              switch (new Random().Next(1,3))
+              {
                    case 1:
                     kvadrat = new StandartShape(3, 0);
                   break;
@@ -211,7 +217,15 @@ namespace MyTetris
                    case 2:
                   kvadrat = new Liquidshape(3, 0);
                   break;
-               }
+              }
+
+                if(kvadrat.ChecknextStep(gameMape))
+                {
+                    ClearMap();
+                    timer1.Tick -= new EventHandler(update);
+                    timer1.Stop();
+                    MessageBox.Show("ваш результат" + " " + score);
+                }
 
                       
             }
