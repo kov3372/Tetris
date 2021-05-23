@@ -22,6 +22,14 @@ namespace MyTetris
              { 0, 0, 0 }
         };
 
+
+        private static int[,] figure7 = new int[3, 3]
+        {
+             { 0, 0, 1 },
+             { 1, 1, 1 },
+             { 0, 0, 0 }
+        };
+
         private static int[,] figure3 = new int[3, 3]
         {
              { 0, 1, 0 },
@@ -44,7 +52,6 @@ namespace MyTetris
             { 1, 0, 0, 0 }
         };
 
-
         // метод синхронизацыи масива фигуры и масива поля(работает)
         public override void SyncShapeWithMap(int[,] gameMape)
         {
@@ -59,23 +66,15 @@ namespace MyTetris
                 }
             }
         }
-
-                            
-      
-
-
-
-
-
-
+                               
         // констурктор
         public StandartShape(int x, int y)
         {
             this.x = x;
             this.y = y;
             this.body = GenetateBody();
+           
         }
-
 
         public void ResetHape(int x, int y)
         {
@@ -83,13 +82,12 @@ namespace MyTetris
             this.y = y;
         }
 
-
-        // метод генерации тела
+        // метод генерации тела (работает)
         public int[,] GenetateBody()
         {
             int[,] matrix = body;
 
-            switch (new Random().Next(1, 6))
+            switch (new Random().Next(1, 7))
             {
                 case 1:
                     matrix = figure1;
@@ -109,7 +107,7 @@ namespace MyTetris
             }
             return matrix;
         }
-        // попытка вертеть фигуру
+       
        
     }
 }

@@ -12,6 +12,27 @@ namespace MyTetris
 {
     public partial class Form1 : Form
     {
+        public void StartGame()
+        {
+            kvadrat = new Liquidshape(3, 0);
+            normalInterval = 1000;
+            fastInterval = 300;
+            score = 0;
+            deadLines = 0;
+
+            timer1.Interval = normalInterval;
+            timer1.Tick += new EventHandler(update);
+            timer1.Start();
+
+            label1.Text = "линий  " + deadLines;
+            label2.Text = "очки  " + score;
+
+            // движение в право влево
+            this.KeyUp += new KeyEventHandler(key);
+
+        }
+
+
         // игровое поле
         private int[,] gameMape = new int[16, 8];
 
@@ -23,10 +44,10 @@ namespace MyTetris
         Shape kvadrat = new Liquidshape(3, 0);
 
         // обычный интервал падения
-        int normalInterval = 1000;
+        int normalInterval ;
 
         // ускореный интервал падения
-        int fastInterval = 300;
+        int fastInterval ;
 
         // очки игры
         private int score = 0;
@@ -66,6 +87,9 @@ namespace MyTetris
                 }
             }
         }
+
+
+       
 
         // очистка заполненых рядов (работате)
         public void DeleteFilledRows()
@@ -117,17 +141,8 @@ namespace MyTetris
 
         public Form1()
         {
-            InitializeComponent();                   
-            //  таймер
-            timer1.Interval = normalInterval;
-            timer1.Tick += new EventHandler(update);
-            timer1.Start();
-
-            label1.Text = "линий  " + deadLines;
-            label2.Text = "очки  " + score;
-
-            // движение в право влево
-            this.KeyUp += new KeyEventHandler(key);
+            InitializeComponent();
+            StartGame();         
         }
 
         // контроль клавиш
@@ -218,6 +233,7 @@ namespace MyTetris
                     timer1.Tick -= new EventHandler(update);
                     timer1.Stop();
                     MessageBox.Show("ваш результат" + " " + score);
+                    StartGame();
                 }
                      
             }
@@ -234,6 +250,8 @@ namespace MyTetris
             DrawGrid(e.Graphics);
             // отрисовка фигуры
             Drawfigure(e.Graphics);
+
+          
         }
 
       

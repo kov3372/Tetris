@@ -13,6 +13,7 @@ namespace MyTetris
             this.x = x;
             this.y = y;
             this.body = figure1;
+           
         }
 
 

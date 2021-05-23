@@ -11,6 +11,7 @@ namespace MyTetris
         public int x;
         public int y;
         public int[,] body;
+     
 
 
         // метод сонхронизаций масива поля и масива фигурки(работает)
@@ -60,9 +61,8 @@ namespace MyTetris
         }
 
 
-
         // проверка на то что не выходит ли фигура за правую гарницу карты или не лежит какая то фигура с права (работает )
-         public bool CheckRightside(int[,] gameMape)
+        public bool CheckRightside(int[,] gameMape)
         {
             for (int i = y; i < y + body.GetLength(1); i++)
             {
