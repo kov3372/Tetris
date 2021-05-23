@@ -16,7 +16,6 @@ namespace MyTetris
            
         }
 
-
         public int[,] figure1 = new int[3, 3]
         {
              { 2, 0, 0, },
@@ -24,9 +23,7 @@ namespace MyTetris
              { 0, 0, 2, },
            
         };
-      
-        
-           
+                       
        // метод который пробегал по фигуре(работает)
         public void GoOnMainfiagonal(int[,] gameMape)
         {
@@ -53,8 +50,7 @@ namespace MyTetris
             {
                 int g1 = i - y;
                 int g2 = p1 - x;
-
-                                          
+                                         
                     if (g1  >= body.GetLength(1) - 1)
                     {       
                         if(g1-1 == body.GetLength(1) - 1)
@@ -134,8 +130,6 @@ namespace MyTetris
             }
 
         }
-         
-      
-     
+                 
     }
 }

@@ -24,11 +24,13 @@ namespace MyTetris
             timer1.Tick += new EventHandler(update);
             timer1.Start();
 
+            
+            
+
             label1.Text = "линий  " + deadLines;
             label2.Text = "очки  " + score;
 
-            // движение в право влево
-            this.KeyUp += new KeyEventHandler(key);
+           
 
         }
 
@@ -87,10 +89,7 @@ namespace MyTetris
                 }
             }
         }
-
-
-       
-
+    
         // очистка заполненых рядов (работате)
         public void DeleteFilledRows()
         {
@@ -142,7 +141,9 @@ namespace MyTetris
         public Form1()
         {
             InitializeComponent();
-            StartGame();         
+            StartGame();
+            this.KeyUp += new KeyEventHandler(key);
+                 
         }
 
         // контроль клавиш
@@ -186,8 +187,7 @@ namespace MyTetris
                         Invalidate();
                  }
                 break;
-
-                
+               
                 case Keys.Right:
                 if (!kvadrat.CheckRightside(gameMape))
                 {
@@ -200,6 +200,20 @@ namespace MyTetris
                  Invalidate();
                 }                   
                 break;
+
+
+                case Keys.Enter:
+                    if (timer1.Enabled)
+                    {
+                        label3.Text = "Продолжить";
+                        timer1.Stop();
+                    }
+                    else
+                    {
+                        label3.Text = "Пауза";
+                        timer1.Start();
+                    }
+                    break;
             }
         }
 
@@ -213,8 +227,8 @@ namespace MyTetris
             }
             else
             {
-                kvadrat.SyncShapeWithMap(gameMape);
-                DeleteFilledRows();
+               kvadrat.SyncShapeWithMap(gameMape);
+               DeleteFilledRows();
 
               switch (new Random().Next(1,3))
               {
@@ -254,7 +268,13 @@ namespace MyTetris
           
         }
 
-      
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+           
+        }
     }
+
+
 
 }

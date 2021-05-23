@@ -60,7 +60,6 @@ namespace MyTetris
             
         }
 
-
         // проверка на то что не выходит ли фигура за правую гарницу карты или не лежит какая то фигура с права (работает )
         public bool CheckRightside(int[,] gameMape)
         {
@@ -90,7 +89,6 @@ namespace MyTetris
             }
             return false;
         }
-
 
         // метод на проверку левой стороны ( работатет)
         public bool CheckLefttside(int[,] gameMape)
@@ -123,7 +121,6 @@ namespace MyTetris
             return false;
         }
 
-
         // попытка вертеть фигуру вертит фигуру только в 2 -е позиций
         public void Rotate(int[,] gameMape)
         {
@@ -149,7 +146,6 @@ namespace MyTetris
                     Right();
             }
         }
-
 
         // метод для проверки возможна ли ротация (работате )
         public bool RoteshenIsPossible(int[,] gameMape)
