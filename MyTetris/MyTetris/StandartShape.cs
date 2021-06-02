@@ -22,7 +22,6 @@ namespace MyTetris
              { 0, 0, 0 }
         };
 
-
         private static int[,] figure7 = new int[3, 3]
         {
              { 0, 0, 1 },

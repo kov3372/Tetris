@@ -71,7 +71,7 @@
             this.Controls.Add(this.label1);
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "LiquidTetris";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PaintAllObject);
             this.ResumeLayout(false);
             this.PerformLayout();

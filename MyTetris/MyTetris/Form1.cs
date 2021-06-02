@@ -16,7 +16,7 @@ namespace MyTetris
         {
             kvadrat = new Liquidshape(3, 0);
             normalInterval = 1000;
-            fastInterval = 300;
+            fastInterval = 100;
             score = 0;
             deadLines = 0;
 
@@ -24,18 +24,13 @@ namespace MyTetris
             timer1.Tick += new EventHandler(update);
             timer1.Start();
 
-            
-            
-
+                   
             label1.Text = "линий  " + deadLines;
-            label2.Text = "очки  " + score;
-
-           
-
+            label2.Text = "очки  " + score;          
         }
 
 
-        // игровое поле
+        // игровое полеCheckNext
         private int[,] gameMape = new int[16, 8];
 
         // размер квадратика
@@ -263,9 +258,7 @@ namespace MyTetris
             // отрисовка сетки
             DrawGrid(e.Graphics);
             // отрисовка фигуры
-            Drawfigure(e.Graphics);
-
-          
+            Drawfigure(e.Graphics);         
         }
 
         private void button1_Click(object sender, EventArgs e)

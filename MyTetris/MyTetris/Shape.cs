@@ -12,8 +12,6 @@ namespace MyTetris
         public int y;
         public int[,] body;
      
-
-
         // метод сонхронизаций масива поля и масива фигурки(работает)
         abstract public void SyncShapeWithMap(int[,] gameMape);
 
@@ -56,8 +54,7 @@ namespace MyTetris
                         }
                     }
                 }
-                return false;
-            
+                return false;           
         }
 
         // проверка на то что не выходит ли фигура за правую гарницу карты или не лежит какая то фигура с права (работает )
